@@ -2,6 +2,7 @@ package ma.enset.resrvationsystem.service;
 
 import ma.enset.resrvationsystem.entity.Report;
 import ma.enset.resrvationsystem.entity.Reservation;
+import ma.enset.resrvationsystem.entity.Session;
 import ma.enset.resrvationsystem.entity.User;
 import ma.enset.resrvationsystem.repository.ReportRepository;
 import ma.enset.resrvationsystem.repository.ReservationRepository;
@@ -35,10 +36,13 @@ public class ReportService {
                     .count();
             float presenceRate = (float) confirmedCount / userReservations.size() * 100;
 
-            Report report = new Report();
-            report.setUser(user);
-            report.setPresenceRate(presenceRate);
-            reports.add(report);
+            for (Reservation reservation : userReservations) {
+                Report report = new Report();
+                report.setUser(user);
+                report.setSession(reservation.getSession());
+                report.setPresenceRate(presenceRate);
+                reports.add(report);
+            }
         }
 
         return reportRepository.saveAll(reports);
@@ -48,4 +52,3 @@ public class ReportService {
         return reservationRepository.findAllUsersWithReservationRateAbove(70);
     }
 }
-

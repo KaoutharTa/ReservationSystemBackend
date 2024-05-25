@@ -1,11 +1,9 @@
 package ma.enset.resrvationsystem.entity;
 
-
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 
 @Entity
-
 public class Report {
 
     @Id
@@ -14,18 +12,17 @@ public class Report {
 
     @ManyToOne
     @JoinColumn(name = "user_id")
-    @NotNull(message = "User is required")
     private User user;
 
+    @NotNull(message = "Session is required")
     @ManyToOne
     @JoinColumn(name = "session_id")
-    @NotNull(message = "Session is required")
     private Session session;
 
-    @NotNull(message = "Presence rate is required")
-    private Float presenceRate;
+    private float presenceRate;
 
     // Getters and setters
+
     public Long getId() {
         return id;
     }
@@ -50,12 +47,11 @@ public class Report {
         this.session = session;
     }
 
-    public Float getPresenceRate() {
+    public float getPresenceRate() {
         return presenceRate;
     }
 
-    public void setPresenceRate(Float presenceRate) {
+    public void setPresenceRate(float presenceRate) {
         this.presenceRate = presenceRate;
     }
 }
-
